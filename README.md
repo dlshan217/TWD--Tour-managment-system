@@ -37,7 +37,7 @@ Vendors can register, create tour packages, and manage bookings — all with a c
 
 | Component | Technology |
 |----------|------------|
-| Backend | **Django 5+** |
+| Backend | **Python-Django ** |
 | Frontend | HTML, CSS, custom UI |
 | Database | SQLite (default) |
 | Authentication | Session-based |
