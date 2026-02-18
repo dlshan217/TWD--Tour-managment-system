@@ -7,86 +7,53 @@
   <title>Payment — TWD</title>
   <link rel="stylesheet" href="{% static 'css/payment.css' %}">
 
-  <style>
-    :root{
-      --bg:#f6f8fb; --card:#fff; --muted:#6b7280; --primary:#2563eb;
-      --radius:12px; --shadow:0 12px 30px rgba(10,20,40,0.06); --max-width:920px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:linear-gradient(180deg,var(--bg),#fff);
-      color:#0b1220;
-      padding:28px;
-    }
-    .wrap{max-width:var(--max-width);margin:28px auto}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#eef2ff,#f8fbff);display:flex;align-items:center;justify-content:center;font-weight:800}
-    h1{margin:0;font-size:20px}
-    .card{background:var(--card);border-radius:14px;padding:20px;border:1px solid rgba(6,18,41,0.04);box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
-    .checkout-header{display:flex;flex-direction:column;gap:6px}
-    .merchant{display:flex;gap:12px;align-items:center}
-    .merchant .avatar{width:56px;height:56px;border-radius:10px;background:linear-gradient(180deg,#eef2ff,#fbfdff);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary)}
-    .summary{background:#fbfdff;border-radius:10px;padding:12px;border:1px solid rgba(6,18,41,0.03)}
-    .summary .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(6,18,41,0.03)}
-    .summary .row:last-child{border-bottom:0}
-    .total{font-weight:900;font-size:18px}
-    .small{color:var(--muted);font-size:13px}
-    .btn-razor{display:block;margin-top:14px}
-    .note{font-size:13px;color:var(--muted);margin-top:8px}
-    .foot{margin-top:12px;font-size:13px;color:var(--muted)}
-    @media (max-width:880px){
-      .card{grid-template-columns:1fr; padding:16px}
-    }
-  </style>
 </head>
+
 <body>
   <div class="wrap">
+
     <header class="topbar">
       <div class="brand">
         <div class="logo">TWD</div>
         <div>
-          <h1>Checkout</h1>
-          <div class="small">Secure payment via Razorpay</div>
+          <h1 style="margin:0">Checkout</h1>
+          <div style="font-size:13px;color:var(--muted)">Secure payment via Razorpay</div>
         </div>
       </div>
 
-      <nav style="display:flex;gap:8px;align-items:center">
-        <a href="{% url 'userhome' %}" style="text-decoration:none;color:var(--muted)">Continue browsing</a>
-      </nav>
+      <a href="{% url 'userhome' %}" style="text-decoration:none;color:var(--muted)">Continue browsing</a>
     </header>
 
-    <main class="card" role="main" aria-labelledby="checkout-title">
-      <section>
-        <div class="checkout-header">
-          <h2 id="checkout-title" style="margin:0">Complete your booking</h2>
+    <main class="card">
+
+      <div class="merchant">
+        <div class="avatar">TWD</div>
+        <div>
+          <div style="font-weight:800">TWD — Travel & Tours</div>
+          <div style="font-size:13px;color:var(--muted)">Payments processed securely</div>
+        </div>
+      </div>
+
+
+      <!-- Razorpay FORM (IMPORTANT) -->
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Razorpay Payment Button Script -->
+        <div class="btn-razor">
+          <script 
+            src="https://checkout.razorpay.com/v1/payment-button.js"
+            data-payment_button_id="pl_QMuZb9R8wIFeE3"
+            async>
+          </script>
         </div>
 
-        <div style="margin-top:18px">
-          <div class="merchant">
-            <div class="avatar" aria-hidden="true">TWD</div>
-            <div>
-              <div style="font-weight:800">TWD — Travel & Tours</div>
-              <div class="small">Payments processed securely</div>
-            </div>
-          </div>
-        </div>
+      </form>
 
-        <div style="margin-top:18px">
+      <div class="note">
+        After successful payment, your booking will be confirmed automatically.
+      </div>
 
-            <div style="margin-top:12px">
-              <!-- Razorpay payment button (keep your ID) -->
-              <div class="btn-razor">
-                <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QMuZb9R8wIFeE3" async> </script>
-              </div>
-            </div>
-
-            <div style="margin-top:12px" class="small">After successful payment you'll receive a confirmation email and booking details.</div>
-          </div>
-        </div>
-      </aside>
     </main>
   </div>
 </body>

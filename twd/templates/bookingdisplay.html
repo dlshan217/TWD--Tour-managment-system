@@ -1,141 +1,87 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Bookings — TWD</title>
-  <link rel="stylesheet" href="{% static 'css/bbookingdisplay.css' %}">
-
-  <style>
-    :root{
-      --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280;
-      --primary:#2563eb; --accent:#06b6d4; --radius:12px;
-      --shadow-sm:0 8px 20px rgba(10,20,40,0.06);
-      --shadow-lg:0 20px 50px rgba(10,20,40,0.10);
-      --max-width:1100px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,var(--bg),#fff);color:#0b1220;padding:28px}
-    .wrap{max-width:var(--max-width);margin:20px auto}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#eef2ff,#f8fbff);display:flex;align-items:center;justify-content:center;font-weight:800}
-    h1{margin:0;font-size:20px}
-    .actions{display:flex;gap:10px;align-items:center}
-    .btn{padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
-    .btn.ghost{background:transparent;border:1px solid rgba(37,99,235,0.08);color:var(--primary)}
-    .btn.primary{background:linear-gradient(90deg,var(--primary),#0ea5e9);color:#fff}
-
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:14px}
-    .card{background:linear-gradient(180deg,var(--card),#fbfcff);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid rgba(10,20,40,0.04);display:flex;flex-direction:column;transition:transform .12s ease}
-    .card:hover{transform:translateY(-6px)}
-    .media{position:relative;min-height:160px;overflow:hidden;background:linear-gradient(90deg,#f0f7ff,#fbfdff)}
-    .media img{width:100%;height:100%;object-fit:cover;display:block}
-    .price-badge{position:absolute;right:12px;top:12px;background:linear-gradient(90deg,#ff7a59,#ffb86b);color:white;padding:8px 12px;border-radius:10px;font-weight:800}
-
-    .body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
-    .title{margin:0;font-weight:800;font-size:16px}
-    .desc{margin:0;color:var(--muted);font-size:14px;max-height:3.2rem;overflow:hidden}
-
-    .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;color:var(--muted);font-weight:700;font-size:13px}
-    .meta .item{display:flex;flex-direction:column}
-    .meta .label{font-size:12px;color:#6b7280;font-weight:600}
-    .meta .value{font-weight:700;color:#0b1220}
-
-    .footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-    .small{font-size:13px;color:var(--muted)}
-
-    .empty{padding:40px;border-radius:12px;background:var(--card);box-shadow:var(--shadow-sm);text-align:center;color:var(--muted);margin-top:12px}
-
-    @media (max-width:760px){
-      .topbar{flex-direction:column;align-items:flex-start;gap:10px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings — TWD</title>
+    <link rel="stylesheet" href="{% static 'css/bookingdisplay.css' %}">
 </head>
 <body>
-  <div class="wrap">
-    <header class="topbar" role="banner">
-      <div class="brand">
-        <div class="logo">TWD</div>
-        <div>
-          <h1>My Bookings</h1>
-          <div style="font-size:13px;color:var(--muted)">All bookings you’ve made</div>
-        </div>
-      </div>
 
-      <div class="actions">
-        <a class="btn ghost" href="{% url 'userhome' %}">Back to Home</a>
-        <!-- placeholder for future: export / download -->
-        <button class="btn primary" onclick="window.print()">Print</button>
-      </div>
+<div class="container">
+
+    <!-- ===== Topbar ===== -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">TWD</div>
+            <div>
+                <h1>My Bookings</h1>
+                <span>All bookings you’ve made</span>
+            </div>
+        </div>
+
+        <nav class="desktop-actions">
+            <a href="{% url 'userhome' %}" class="btn ghost">Back to Home</a>
+            <button onclick="window.print()" class="btn primary">Print</button>
+        </nav>
     </header>
 
+    <!-- ===== Booking Grid ===== -->
     {% if booking %}
-      <section class="grid" role="list">
+    <main class="grid">
         {% for i in booking %}
-          <article class="card" role="listitem" aria-labelledby="btitle-{{ i.id }}">
-            <div class="media">
-              {% if i.package and i.package.image %}
-                <img src="{{ i.package.image.url }}" alt="{{ i.package.title|default:'Package image' }}">
-              {% else %}
-                <img src="{% static 'images/placeholder.jpg' %}" alt="No image available">
-              {% endif %}
-              <div class="price-badge">₹ {{ i.package.price|default:'N/A' }}</div>
+        <div class="card">
+            <div class="image">
+                {% if i.package and i.package.image %}
+                <img src="{{ i.package.image.url }}" alt="">
+                {% else %}
+                <img src="{% static 'images/placeholder.jpg' %}" alt="">
+                {% endif %}
+                <span class="price">₹ {{ i.package.price|default:"N/A" }}</span>
             </div>
 
-            <div class="body">
-              <h3 id="btitle-{{ i.id }}" class="title">
-                {% if i.package and i.package.title %}{{ i.package.title }}{% else %}Package{% endif %}
-              </h3>
+            <div class="card-body">
+                <h3>{{ i.package.title|default:"Package" }}</h3>
+                <p>{{ i.package.description|default:"No description available." }}</p>
 
-              <p class="desc">{{ i.package.description|default:"No description available." }}</p>
-
-              <div class="meta" aria-hidden="false">
-                <div class="item">
-                  <span class="label">Booked by</span>
-                  <span class="value">{{ i.fullname|default:"—" }}</span>
+                <div class="details">
+                    <div><strong>Name:</strong> {{ i.fullname }}</div>
+                    <div><strong>Phone:</strong> {{ i.phone }}</div>
+                    <div><strong>People:</strong> {{ i.number_of_people }}</div>
+                    <div>
+                        <strong>Date:</strong>
+                        {% if i.booking_date %}
+                        {{ i.booking_date|date:"Y-m-d" }}
+                        {% else %}
+                        —
+                        {% endif %}
+                    </div>
                 </div>
 
-                <div class="item">
-                  <span class="label">Phone</span>
-                  <span class="value">{{ i.phone|default:"—" }}</span>
+                <div class="footer">
+                    Booking ID: <strong>{{ i.id }}</strong>
                 </div>
-
-                <div class="item">
-                  <span class="label">People</span>
-                  <span class="value">{{ i.number_of_people|default:"1" }}</span>
-                </div>
-
-                <div class="item">
-                  <span class="label">Date</span>
-                  <span class="value">
-                    {% if i.booking_date %}
-                      {{ i.booking_date|date:"Y-m-d" }}
-                    {% else %}
-                      —
-                    {% endif %}
-                  </span>
-                </div>
-              </div>
-
-              <div class="footer">
-                <div class="small">Booking ID: <strong>{{ i.id }}</strong></div>
-                <div>
-                 
-                </div>
-              </div>
             </div>
-          </article>
+        </div>
         {% endfor %}
-      </section>
+    </main>
     {% else %}
-      <div class="empty">
+    <div class="empty">
         <h3>No bookings found</h3>
-        <p>Looks like you haven’t booked any packages yet. Browse packages and book your next trip!</p>
-        <a class="btn primary" href="{% url 'userhome' %}" style="text-decoration:none">Browse packages</a>
-      </div>
+        <p>You haven’t booked any packages yet.</p>
+        <a href="{% url 'userhome' %}" class="btn primary">Browse Packages</a>
+    </div>
     {% endif %}
-  </div>
+
+</div>
+
+<!-- ===== Mobile Bottom Nav ===== -->
+<nav class="mobile-nav">
+    <a href="{% url 'userhome' %}">Home</a>
+    <a href="{% url 'bookingdisplay' %}">Bookings</a>
+    <a href="{% url 'profile' %}">Profile</a>
+</nav>
+
 </body>
 </html>

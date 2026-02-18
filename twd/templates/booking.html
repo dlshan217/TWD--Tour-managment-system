@@ -1,108 +1,94 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Book — {{ package.title }}</title>
-  <link rel="stylesheet" href="{% static 'css/booking.css' %}">
-  <style>
-    /* minimal inline styles to work immediately */
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:18px;color:#0b1220}
-    .wrap{max-width:980px;margin:20px auto;display:grid;grid-template-columns:1fr 420px;gap:20px}
-    .card{background:#fff;border-radius:12px;padding:16px;border:1px solid #eef2f6;box-shadow:0 6px 18px rgba(10,20,40,0.04)}
-    .cover{height:220px;border-radius:8px;overflow:hidden;background:#f6f8fb;display:flex;align-items:center;justify-content:center}
-    .cover img{width:100%;height:100%;object-fit:cover}
-    .label{font-weight:700;font-size:13px;margin-bottom:6px}
-    .muted{color:#6b7280;font-size:14px}
-    .form-row{margin-bottom:12px}
-    input[type="text"], input[type="date"], input[type="number"], textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e6edf3}
-    input[disabled]{background:#f7f9fb;color:#374151}
-    .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:#2563eb;color:#fff;text-decoration:none;border:0;cursor:pointer}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book — {{ package.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/booking.css' %}">
 </head>
 <body>
-  <div class="wrap">
-    <!-- left: package summary -->
-    <div class="card">
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <div style="flex:1">
-          <h2 style="margin:0 0 8px 0">{{ package.title|default:"Untitled package" }}</h2>
-          <div class="muted">{{ package.description|default:"No description provided." }}</div>
-          <div style="margin-top:12px; display:flex; gap:12px; align-items:center">
-            <div>
-              <div class="label">Departure</div>
-              <div class="muted">{% if package.date %}{{ package.date|date:"Y-m-d" }}{% else %}Date TBA{% endif %}</div>
+
+<div class="container">
+
+    <!-- ===== Package Summary ===== -->
+    <section class="summary card">
+        <div class="summary-content">
+            <div class="summary-text">
+                <h2>{{ package.title|default:"Untitled package" }}</h2>
+                <p class="muted">
+                    {{ package.description|default:"No description provided." }}
+                </p>
+
+                <div class="meta">
+                    <div>
+                        <span class="label">Departure</span>
+                        <span>
+                            {% if package.date %}
+                            {{ package.date|date:"Y-m-d" }}
+                            {% else %}
+                            Date TBA
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div>
+                        <span class="label">Price</span>
+                        <span>₹ {{ package.price|default:"N/A" }}</span>
+                    </div>
+                </div>
             </div>
-            <div>
-              <div class="label">Price</div>
-              <div class="muted">RS {{ package.price|default:"N/A" }}</div>
+
+            <div class="summary-image">
+                {% if package.image %}
+                <img src="{{ package.image.url }}" alt="">
+                {% else %}
+                <img src="{% static 'images/placeholder.jpg' %}" alt="">
+                {% endif %}
             </div>
-          </div>
         </div>
+    </section>
 
-        <div style="width:220px">
-          <div class="cover">
-            {% if package.image %}
-              <img src="{{ package.image.url }}" alt="{{ package.title }}">
-            {% else %}
-              <img src="{% static 'images/placeholder.jpg' %}" alt="No image">
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- ===== Booking Form ===== -->
+    <aside class="form-card card">
+        <h3>Confirm Booking</h3>
 
-    <!-- right: booking form -->
-    <aside class="card">
-      <h3 style="margin-top:0">Confirm booking</h3>
-      <form method="post">
-        {% csrf_token %}
+        <form method="post">
+            {% csrf_token %}
 
-        <!-- Visible but disabled: fullname & phone -->
-        <div class="form-row">
-  <label class="label">Full name</label>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" value="{{ user_obj.username }}" disabled>
+                <input type="hidden" name="fullname" value="{{ user_obj.username }}">
+            </div>
 
-  {% if user_obj.username %}
-    <input type="text" value="{{ user_obj.username }}" disabled>
-    <input type="hidden" name="fullname" value="{{ user_obj.username }}">
-  {% elif user_obj.fullname %}
-    <input type="text" value="{{ user_obj.fullname }}" disabled>
-    <input type="hidden" name="fullname" value="{{ user_obj.fullname }}">
-  {% else %}
-    <input type="text" value="" disabled>
-    <input type="hidden" name="fullname" value="">
-  {% endif %}
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" value="{{ user_obj.phone }}" disabled>
+                <input type="hidden" name="phone" value="{{ user_obj.phone }}">
+            </div>
+
+            <input type="hidden" name="package" value="{{ package.id }}">
+
+            <div class="form-group">
+                <label>Number of People</label>
+                {{ form.number_of_people }}
+            </div>
+
+            <div class="form-group">
+                <label>Booking Date</label>
+                {{ form.booking_date }}
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'userhome' %}" class="btn secondary">Cancel</a>
+                <a href="{% url 'payment' %}" class="btn primary">Confirm & Pay</a>
+                
+            </div>
+        </form>
+    </aside>
+
 </div>
 
-
-        <div class="form-row">
-          <label class="label">Phone</label>
-          <input type="text" value="{{ user_obj.phone|default:'' }}" disabled>
-          <input type="hidden" name="phone" value="{{ user_obj.phone|default:'' }}">
-        </div>
-
-        <!-- Hidden package id (but view will set package server-side regardless) -->
-        <input type="hidden" name="package" value="{{ package.id }}">
-
-        <div class="form-row">
-          <label class="label">Number of people</label>
-          {{ form.number_of_people }}
-          {% if form.number_of_people.errors %}<div style="color:#b91c1c">{{ form.number_of_people.errors.0 }}</div>{% endif %}
-        </div>
-
-        <div class="form-row">
-          <label class="label">Booking date</label>
-          {{ form.booking_date }}
-          {% if form.booking_date.errors %}<div style="color:#b91c1c">{{ form.booking_date.errors.0 }}</div>{% endif %}
-        </div>
-
-        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px">
-          <a href="{% url 'userhome' %}" class="btn" style="background:#e6eefc;color:#2563eb;text-decoration:none;padding:8px 12px;border-radius:8px">Cancel</a>
-          <button class="btn" type="submit">Confirm & Pay</button>
-        </div>
-      </form>
-    </aside>
-  </div>
 </body>
 </html>

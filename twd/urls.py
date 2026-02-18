@@ -21,6 +21,8 @@ urlpatterns = [
       path('vendorbookings/',v.vendorbookings, name='vendorbookings'),
       path('profile/',v.profile, name='profile'),
       path('payment/',v.payment, name='payment'),
+      path('profile/edit/', v.profile_edit, name='profile_edit'),
+
       
       path('package/<int:pk>/', v.package_detail, name='package_detail'),
       path('profile/edit/', v.profile_edit, name='profile_edit'),

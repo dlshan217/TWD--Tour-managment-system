@@ -2,202 +2,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>User Home — TWD</title>
-
-  <link rel="stylesheet" href="{% static 'css/userhome.css' %}">
-
-  <style>
-    :root{
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --muted: #6b7280;
-      --primary-700: #1e3a8a;
-      --primary-500: #2563eb;
-      --accent: #06b6d4;
-      --radius: 14px;
-      --shadow-sm: 0 6px 18px rgba(20,24,40,0.06);
-      --shadow-lg: 0 18px 40px rgba(20,24,40,0.12);
-      --max-width: 1200px;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg, var(--bg), #ffffff);
-      color:#0f172a;
-      -webkit-font-smoothing:antialiased;
-      line-height:1.45;
-    }
-
-    .wrap{
-      max-width:var(--max-width);
-      margin:40px auto;
-      padding:28px;
-    }
-
-    /* Topbar */
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
-      background: linear-gradient(90deg,var(--primary-500), #0ea5e9 70%);
-      padding:14px 18px;
-      border-radius:12px;
-      color:white;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .brand{display:flex;align-items:center;gap:14px}
-    .logo{
-      width:48px;height:48px;border-radius:10px;
-      display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(135deg,#ffffff22,#ffffff11);
-      font-weight:800;font-size:18px;
-    }
-    .brand h1{margin:0;font-size:18px;font-weight:700;color:#fff}
-    .nav-actions{display:flex;gap:10px;align-items:center}
-    .nav-actions a{
-      color:white;text-decoration:none;padding:8px 12px;border-radius:10px;
-      background:rgba(255,255,255,0.08);font-weight:600;
-    }
-    .nav-actions a:hover{background:rgba(255,255,255,0.14)}
-
-    /* header row */
-    .header-row{margin-top:18px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .search{
-      flex:1 1 420px;display:flex;align-items:center;gap:10px;
-      background:var(--card);padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-sm);
-      border:1px solid rgba(15,23,42,0.03);
-    }
-    .search input{border:0;outline:0;font-size:15px;width:100%;background:transparent;color:#0f172a}
-    .quick{display:flex;gap:10px;align-items:center}
-    .pill{background:var(--card);padding:8px 12px;border-radius:10px;box-shadow:var(--shadow-sm);font-weight:600;color:#0f172a}
-
-    /* grid */
-    .main-grid{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-
-    .card{
-      background:linear-gradient(180deg,var(--card), #fbfcff);
-      border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);
-      border:1px solid rgba(15,23,42,0.04);display:flex;flex-direction:column;
-      transition:transform .18s ease,box-shadow .18s ease;
-    }
-    .card:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(20,24,40,0.14)}
-
-    .card-media{position:relative;min-height:160px;max-height:240px;overflow:hidden;background:linear-gradient(90deg,#eef2ff,#f8fafc)}
-    .card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
-    .card:hover .card-media img{transform:scale(1.03)}
-
-    .badge{position:absolute;left:12px;top:12px;background:rgba(0,0,0,0.6);color:white;padding:6px 10px;border-radius:999px;font-size:13px;font-weight:700}
-    .price-badge{position:absolute;right:12px;top:12px;background:linear-gradient(90deg,#ff7a59,#ffb86b);color:white;padding:8px 12px;border-radius:12px;font-weight:700;font-size:14px}
-
-    .card-body{padding:16px;display:flex;flex-direction:column;gap:12px;flex:1}
-    .card-title{margin:0;font-size:16px;font-weight:700;color:#0b1220}
-    .card-desc{margin:0;color:var(--muted);font-size:14px;line-height:1.4;max-height:3.2rem;overflow:hidden;text-overflow:ellipsis}
-
-    .meta-row{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:6px}
-    .meta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px;font-weight:600}
-    .meta svg{opacity:0.85;vertical-align:middle}
-
-    .actions{display:flex;gap:8px;align-items:center}
-    .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:700;background:linear-gradient(90deg,var(--primary-500),var(--primary-700));color:white;box-shadow:0 10px 28px rgba(37,99,235,0.14);transition:transform .12s}
-    .btn.secondary{background:transparent;color:var(--primary-700);border:1px solid rgba(37,99,235,0.12);box-shadow:none}
-    .btn:active{transform:translateY(1px)}
-
-    .empty{text-align:center;padding:48px 18px;color:var(--muted);border-radius:12px;background:linear-gradient(180deg,#ffffff,#fbfdff);box-shadow:var(--shadow-sm)}
-
-    @media (max-width:720px){
-      .wrap{padding:18px;margin:18px}
-      .card-media{min-height:140px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Home — TWD</title>
+    <link rel="stylesheet" href="{% static 'css/userhome.css' %}">
 </head>
 <body>
-  <div class="wrap">
-    <header class="topbar" role="banner" aria-label="Top navigation">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">TWD</div>
-        <div>
-          <h1 style="margin:0">TWD — Travel & Tours</h1>
-          <div style="font-size:12px; opacity:.95; color:rgba(255,255,255,0.95)">Explore curated packages</div>
-        </div>
-      </div>
 
-      <nav class="nav-actions" role="navigation" aria-label="User actions">
-        <a class="profile" href="{% url 'profile' %}">Profile</a>
-        <a class="bookings" href="{% url 'bookingdisplay' %}">Bookings</a>
-        <a class="logout" href="{% url 'userlogout' %}">Logout</a>
-      </nav>
+<div class="container">
+
+    <!-- ===== Topbar ===== -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">TWD</div>
+            <div>
+                <h4>Home</h4>
+            </div>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'bookingdisplay' %}">Bookings</a>
+            
+        </nav>
     </header>
 
-    <div class="header-row" role="region" aria-label="Search and quick actions">
-      <div class="search" aria-hidden="false">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M21 21l-4.35-4.35" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="11" cy="11" r="6" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <input type="search" placeholder="Search packages, dates, places..." aria-label="Search packages" />
-      </div>
+    <!-- ===== Search ===== -->
+    <section class="search-section">
+        <input type="search" placeholder="Search packages..." />
+    </section>
 
-      <div class="quick" aria-hidden="false">
-        <div class="pill">Showing: <strong style="margin-left:6px">Approved packages</strong></div>
-        <div class="pill">Total: <strong style="margin-left:6px">{{ package|length }}</strong></div>
-      </div>
-    </div>
-
-    <main class="main-grid" role="main" aria-live="polite">
-      {% for i in package %}
-        <article class="card" role="article" aria-labelledby="title-{{ i.id }}">
-          <div class="card-media">
-            <span class="badge">Package</span>
-            <span class="price-badge">RS {{ i.price|default:"N/A" }}</span>
-
-            {% if i.image %}
-              <img src="{{ i.image.url }}" alt="{{ i.title|default:'Package image' }}" loading="lazy">
-            {% else %}
-              <img src="{% static 'images/placeholder.jpg' %}" alt="No image available" loading="lazy">
-            {% endif %}
-          </div>
-
-          <div class="card-body">
-            <h2 id="title-{{ i.id }}" class="card-title">{{ i.title|default:"Untitled package" }}</h2>
-            <p class="card-desc">{{ i.description|default:"No description available." }}</p>
-
-            <div class="meta-row">
-              <div class="meta" title="Departure date">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M7 11h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.2"/>
-                </svg>
-
-                <span>
-                  {% if i.date %}
-                    {{ i.date|date:"Y-m-d" }}
-                  {% else %}
-                    Date TBA
-                  {% endif %}
-                </span>
-              </div>
-
-              <div class="actions">
-                <a class="btn" href="{% url 'booking' i.id %}" aria-label="Book {{ i.title|default:'this package' }}">Book Now</a>
-              </div>
+    <!-- ===== Packages ===== -->
+    <main class="grid">
+        {% for i in package %}
+        <div class="card">
+            <div class="image">
+                {% if i.image %}
+                <img src="{{ i.image.url }}" alt="">
+                {% else %}
+                <img src="{% static 'images/placeholder.jpg' %}" alt="">
+                {% endif %}
+                <span class="price">₹ {{ i.price }}</span>
             </div>
-          </div>
-        </article>
-      {% empty %}
-        <div class="empty">
-          <h3>No approved packages available</h3>
-          <p style="margin-top:8px; color:var(--muted)">Check back later or contact admin for package approvals.</p>
+
+            <div class="card-body">
+                <h3>{{ i.title }}</h3>
+                <p>{{ i.description }}</p>
+
+                <div class="meta">
+                    <span>
+                        {% if i.date %}
+                        {{ i.date|date:"Y-m-d" }}
+                        {% else %}
+                        Date TBA
+                        {% endif %}
+                    </span>
+                </div>
+
+                <a href="{% url 'booking' i.id %}" class="btn">Book Now</a>
+            </div>
         </div>
-      {% endfor %}
+        {% empty %}
+        <div class="empty">
+            <h3>No packages available</h3>
+        </div>
+        {% endfor %}
     </main>
 
-  </div>
+</div>
+
+<!-- ===== Mobile Bottom Nav ===== -->
+<nav class="mobile-nav">
+    <a href="{% url 'userhome' %}">Home</a>
+    <a href="{% url 'bookingdisplay' %}">Bookings</a>
+    <a href="{% url 'profile' %}">Profile</a>
+</nav>
+
 </body>
 </html>

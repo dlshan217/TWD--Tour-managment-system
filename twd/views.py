@@ -6,6 +6,31 @@ from django.contrib.auth import logout as django_logout
 from django.urls import reverse
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import ProfileEditForm
+
+@login_required
+def profile_edit(request):
+    user = _get_user_from_session(request)
+    if not user:
+        return redirect('userlogin')
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UserProfileForm(instance=user)
+
+    return render(request, "profile_edit.html", {
+        'form': form,
+        'user_obj': user
+    })
+
+
+
 # Helper utilities
 def _get_user_from_session(request):
     user_id = request.session.get('user_id')
@@ -326,20 +351,7 @@ def profile(request):
 
 from .forms import UserProfileForm
 
-def profile_edit(request):
-    user = _get_user_from_session(request)
-    if not user:
-        return redirect('userlogin')
 
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')   # goes back to profile page
-    else:
-        form = UserProfileForm(instance=user)
-
-    return render(request, "profile_edit.html", {'form': form, 'user_obj': user})
 
 
 def payment(request):

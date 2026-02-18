@@ -93,3 +93,17 @@ class Bookingdetailsform(forms.ModelForm):
     class Meta:
         model = Bookingdetails
         fields = ['fullname', 'phone', 'number_of_people', 'booking_date']
+    
+
+from .models import Usersign_up  
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Usersign_up
+        fields = ['username', 'email', 'phone']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'input'}),
+            'email': forms.EmailInput(attrs={'class': 'input'}),
+            'phone': forms.TextInput(attrs={'class': 'input'}),
+        }
+

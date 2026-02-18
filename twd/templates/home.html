@@ -2,193 +2,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home - TWD</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f5f5f7;
-      color: #1d1d1f;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Home - TWD</title>
 
-    .container {
-      max-width: 1200px;
-      margin: 50px auto;
-      background-color: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      position: relative;
-    }
+<style>
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 40px;
-    }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+}
 
-    .left-section {
-      text-align: left;
-    }
+/* ================= DESKTOP ================= */
 
-    .logo {
-      font-size: 85px;
-      margin: 0;
-      color: #1d1d1f;
-    }
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
 
-    .tagline {
-      font-size: 18px;
-      color: #666;
-    }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
 
-    .right-section {
-      text-align: right;
-    }
+.logo {
+  font-size: 85px;
+  margin: 0;
+}
 
-    .right-section p {
-      margin: 0 0 10px 0;
-      font-weight: bold;
-    }
+.tagline {
+  font-size: 18px;
+  color: #666;
+  margin-top: 5px;
+}
 
-    .nav_ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      gap: 15px;
-      justify-content: flex-end;
-    }
+.nav_ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 15px;
+}
 
-    .nav_ul li {
-      display: inline;
-    }
+.nav_link {
+  text-decoration: none;
+  color: #1d1d1f;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
 
-    .nav_link {
-      text-decoration: none;
-      color: #1d1d1f;
-      font-weight: bold;
-      padding: 8px 16px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
+.nav_link:hover {
+  background-color: #ff5722;
+  color: white;
+}
 
-    .nav_link:hover {
-      background-color: #3c6e71;
-      color: white;
-      box-shadow: 0 4px 10px rgba(60, 110, 113, 0.2);
-    }
+.section_one {
+  text-align: center;
+  margin: 40px 0;
+}
 
-    .section_one {
-      text-align: center;
-      margin: 40px 0;
-    }
+.heading-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
 
-    .hed {
-      font-size: 40px;
-      margin-bottom: 0;
-    }
+.hed {
+  font-size: 2.8rem;
+  margin: 0;
+  color: #333;
+}
 
-    .hed2 {
-      font-size: 40px;
-      color: #3c6e71;
-      margin-top: 0;
-    }
+.hed2 {
+  font-size: 2.8rem;
+  margin: 0;
+  color: #ff5722;
+}
 
-    .img_section img {
-      width: 100%;
-      height: 600px;
-      object-fit: cover;
-      border-radius: 20px;
-    }
+.img_section img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 20px;
+}
 
-    .ab_section {
-      text-align: center;
-      margin: 40px 0;
-    }
+.ab_section {
+  text-align: center;
+  margin: 40px 0;
+}
 
-    .ab_head {
-      font-size: 24px;
-      font-weight: 500;
-      color: #333;
-    }
+.ab_head {
+  font-size: 20px;
+  color: #444;
+}
 
-    .footer {
-      text-align: center;
-      margin-top: 50px;
-    }
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  color: #aaa;
+}
 
-    .ff {
-      font-size: 14px;
-      color: #999;
-    }
-    .hed {
-      color: #333;
-      font-weight: 600;
-    }
-    
-    .hed2 {
-      color: #ff5722;
-      font-weight: 700;
-    }
-    .hed {
-      color: #333;
-      font-weight: 600;
-    }
-    
-    .hed2 {
-      color: #ff5722;
-      font-weight: 700;
-    }
-    .section_one .heading-container {
-      display: flex;
-      gap: 10px; /* space between headings */
-      align-items: center;
-      justify-content: center; /* center horizontally */
-    }
-    
-    .hed, .hed2 {
-      margin: 0;
-      font-size: 2.5rem; /* adjust size as needed */
-    }
-            
-  </style>
+/* ================= MOBILE ================= */
+
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .container {
+    margin: 0;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .logo {
+    font-size: 48px;
+  }
+
+  .tagline {
+    font-size: 14px;
+  }
+
+  .nav_ul {
+    display: none; /* Hide desktop nav */
+  }
+
+  .heading-container {
+    flex-direction: column;
+  }
+
+  .hed, .hed2 {
+    font-size: 1.8rem;
+  }
+
+  .img_section img {
+    height: 250px;
+  }
+
+  .ab_head {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  /* Bottom Navigation */
+
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    border-top: 1px solid #eee;
+  }
+
+  .bottom-nav a {
+    text-decoration: none;
+    color: #1d1d1f;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  body {
+    padding-bottom: 70px;
+  }
+
+}
+
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <header class="header">
-      <div class="left-section">
-        <h1 class="logo"><b>TWD</b></h1>
-        <span class="tagline"><i><center>The World of Discovery</center></i></span>
-      </div>
 
-      <div class="right-section">
-        <p><center>Who is using</center></p>
-        <ul class="nav_ul">
-          <li><a class="nav_link" href="{% url 'signup' %}">Client</a></li>
-          <li><a class="nav_link" href="{% url 'vendorsignup' %}">Vendor</a></li>
-        </ul>
-      </div>
-    </header>
+<div class="container">
 
-    <section class="section_one">
-      <div class="heading-container">
-        <h1 class="hed">Make your trip</h1>
-        <h1 class="hed2">Unforgettable.</h1>
-      </div>
-    </section>
-    
+  <header class="header">
+    <div>
+      <h1 class="logo">TWD</h1>
+      <div class="tagline">The World of Discovery</div>
+    </div>
 
-    <section class="img_section">
-      <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="TWD Banner" />
-    </section>
+    <ul class="nav_ul">
+      <li><a class="nav_link" href="{% url 'signup' %}">Client</a></li>
+      <li><a class="nav_link" href="{% url 'vendorsignup' %}">Vendor</a></li>
+    </ul>
+  </header>
 
-    <section class="ab_section">
-      <h2 class="ab_head">"Traveling – it leaves you speechless, then turns you into a storyteller." –<i> Ibn Battuta</i></h2>
-    </section>
-  </div>
+  <section class="section_one">
+    <div class="heading-container">
+      <h1 class="hed">Make your trip</h1>
+      <h1 class="hed2">Unforgettable.</h1>
+    </div>
+  </section>
+
+  <section class="img_section">
+    <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=2000&q=80" alt="TWD Banner" />
+  </section>
+
+  <section class="ab_section">
+    <h2 class="ab_head">
+      "Traveling – it leaves you speechless, then turns you into a storyteller." – Ibn Battuta
+    </h2>
+  </section>
+
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="{% url 'signup' %}">Client</a>
+  <a href="{% url 'vendorsignup' %}">Vendor</a>
+</nav>
+
 </body>
 </html>
