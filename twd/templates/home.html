@@ -7,190 +7,84 @@
 <title>Home - TWD</title>
 
 <style>
+    :root {
+        --bg: #f6f8fb;
+        --card: #ffffff;
+        --muted: #6b7280;
+        --primary: #2563eb;
+        --accent: #06b6d4;
+        --text: #07102a;
+        --border: #e6edf5;
+    }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f5f5f7;
-  color: #1d1d1f;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+    }
 
-/* ================= DESKTOP ================= */
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: var(--card);
+        border: 1px solid var(--border);
+    }
 
-.container {
-  max-width: 1200px;
-  margin: 50px auto;
-  background-color: white;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 32px;
+        border-bottom: 1px solid var(--border);
+    }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-}
+    .logo { font-size: 22px; font-weight: 800; margin: 0; color: var(--primary); }
+    .tagline { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
-.logo {
-  font-size: 85px;
-  margin: 0;
-}
+    .nav_ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 8px; }
+    .nav_link { text-decoration: none; color: var(--text); font-weight: 700; padding: 8px 16px; border: 1px solid var(--border); font-size: 14px; }
+    .nav_link:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); }
 
-.tagline {
-  font-size: 18px;
-  color: #666;
-  margin-top: 5px;
-}
+    .section_one { text-align: center; padding: 40px 24px 24px; }
+    .heading-container { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .hed { font-size: 2.2rem; margin: 0; }
+    .hed2 { font-size: 2.2rem; margin: 0; color: var(--primary); }
 
-.nav_ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 15px;
-}
+    .img_section img { width: 100%; height: 420px; object-fit: cover; display: block; }
 
-.nav_link {
-  text-decoration: none;
-  color: #1d1d1f;
-  font-weight: bold;
-  padding: 10px 18px;
-  border-radius: 10px;
-  transition: 0.3s;
-}
+    .ab_section { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); }
+    .ab_head { font-size: 16px; color: var(--muted); margin: 0; font-weight: 400; }
 
-.nav_link:hover {
-  background-color: #ff5722;
-  color: white;
-}
+    .footer { text-align: center; padding: 20px; font-size: 13px; color: var(--muted); }
 
-.section_one {
-  text-align: center;
-  margin: 40px 0;
-}
+    .bottom-nav { display: none; }
 
-.heading-container {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
+    @media (max-width: 768px) {
+        .header { flex-direction: column; text-align: center; gap: 14px; padding: 16px; }
+        .logo { font-size: 20px; }
+        .nav_ul { display: none; }
+        .hed, .hed2 { font-size: 1.5rem; }
+        .img_section img { height: 220px; }
 
-.hed {
-  font-size: 2.8rem;
-  margin: 0;
-  color: #333;
-}
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border);
+        }
 
-.hed2 {
-  font-size: 2.8rem;
-  margin: 0;
-  color: #ff5722;
-}
+        .bottom-nav a { text-decoration: none; color: var(--text); font-weight: 700; font-size: 14px; }
 
-.img_section img {
-  width: 100%;
-  height: 600px;
-  object-fit: cover;
-  border-radius: 20px;
-}
-
-.ab_section {
-  text-align: center;
-  margin: 40px 0;
-}
-
-.ab_head {
-  font-size: 20px;
-  color: #444;
-}
-
-.footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 14px;
-  color: #aaa;
-}
-
-/* ================= MOBILE ================= */
-
-.bottom-nav {
-  display: none;
-}
-
-@media (max-width: 768px) {
-
-  .container {
-    margin: 0;
-    border-radius: 0;
-    padding: 20px;
-  }
-
-  .header {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .logo {
-    font-size: 48px;
-  }
-
-  .tagline {
-    font-size: 14px;
-  }
-
-  .nav_ul {
-    display: none; /* Hide desktop nav */
-  }
-
-  .heading-container {
-    flex-direction: column;
-  }
-
-  .hed, .hed2 {
-    font-size: 1.8rem;
-  }
-
-  .img_section img {
-    height: 250px;
-  }
-
-  .ab_head {
-    font-size: 16px;
-    padding: 0 10px;
-  }
-
-  /* Bottom Navigation */
-
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    background: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-    border-top: 1px solid #eee;
-  }
-
-  .bottom-nav a {
-    text-decoration: none;
-    color: #1d1d1f;
-    font-weight: 600;
-    font-size: 16px;
-  }
-
-  body {
-    padding-bottom: 70px;
-  }
-
-}
-
+        body { padding-bottom: 60px; }
+    }
 </style>
 </head>
 
@@ -227,9 +121,10 @@ body {
     </h2>
   </section>
 
+  <div class="footer">© TWD — The World of Discovery</div>
+
 </div>
 
-<!-- MOBILE BOTTOM NAV -->
 <nav class="bottom-nav">
   <a href="{% url 'signup' %}">Client</a>
   <a href="{% url 'vendorsignup' %}">Vendor</a>

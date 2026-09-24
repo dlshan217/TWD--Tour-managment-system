@@ -1,239 +1,155 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vendor Login — TWD</title>
-  <link rel="stylesheet" href="{% static 'css/vendorlogin.css' %}" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vendor Login — TWD</title>
+    <link rel="stylesheet" href="{% static 'css/vendorlogin.css' %}" />
 
-  <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --muted:#6b7280;
-      --primary:#2563eb;
-      --radius:12px;
-      --shadow: 0 10px 30px rgba(10,20,40,0.06);
-      --max-width:760px;
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      background:linear-gradient(180deg,var(--bg),#fff);
-      color:#091325;
-      -webkit-font-smoothing:antialiased;
-      padding:28px;
-    }
-
-    .wrap{
-      max-width:var(--max-width);
-      margin:36px auto;
-      background:var(--card);
-      border-radius:16px;
-      padding:22px;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(6,18,41,0.03);
-    }
-
-    .header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:8px;
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{
-      width:54px;height:54px;border-radius:10px;background:linear-gradient(135deg,#eef2ff,#f0f9ff);
-      display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--primary);
-      font-size:18px;
-    }
-    h1{margin:0;font-size:20px}
-    p.lead{margin:4px 0 0;color:var(--muted);font-size:14px}
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      gap:20px;
-      margin-top:18px;
-    }
-
-    .form-card{
-      background:linear-gradient(180deg,#fff,#fbfdff);
-      padding:18px;border-radius:12px;border:1px solid rgba(6,18,41,0.03);
-    }
-
-    form .row{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-    label{font-weight:700;font-size:13px;color:#07102a}
-
-    input[type="email"], input[type="password"], input[type="text"]{
-      width:100%;
-      padding:12px 14px;
-      border-radius:10px;
-      border:1px solid #e6edf5;
-      font-size:14px;
-      outline:none;
-      transition:box-shadow .12s;
-      background:white;
-    }
-
-    /* ensure container is relative so toggle can absolutely position reliably */
-    .field-inline{position:relative; display:block}
-    .toggle-btn{
-      position:absolute;
-      right:10px;
-      top:50%;
-      transform:translateY(-50%);
-      background:transparent;
-      border:0;
-      cursor:pointer;
-      font-size:13px;
-      color:var(--muted);
-      padding:6px;
-    }
-
-    .actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
-    .btn{
-      background:linear-gradient(90deg,var(--primary), #0ea5e9);
-      color:white; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:800;
-      box-shadow: 0 8px 26px rgba(37,99,235,0.12);
-    }
-    .btn.ghost{background:transparent;color:var(--primary);border:1px solid rgba(37,99,235,0.08);box-shadow:none}
-
-    .side{
-      padding:18px;
-      border-radius:12px;
-      background:linear-gradient(180deg,#fbfdff,#f6f9ff);
-      border:1px solid rgba(6,18,41,0.03);
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      align-items:flex-start;
-      justify-content:center;
-    }
-    .side h3{margin:0;font-size:16px}
-    .side p{margin:0;color:var(--muted);font-size:14px}
-    .link{color:var(--primary);text-decoration:none;font-weight:700}
-
-    .errors{color:#b91c1c;font-size:13px;margin-bottom:8px}
-
-    @media (max-width:880px){
-      .grid{grid-template-columns:1fr}
-      .side{order:2}
-    }
-  </style>
-</head>
-<body>
-  <div class="wrap" role="main">
-    <div class="header">
-      <div class="brand">
-        <div class="logo">TWD</div>
-        <div>
-          <h1>Vendor login</h1>
-          <p class="lead">Sign in to manage your packages and bookings.</p>
-        </div>
-      </div>
-
-      <div style="text-align:right">
-        <small style="color:var(--muted)">New here?</small>
-        <div><a class="link" href="{% url 'vendorsignup' %}">Create an account</a></div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <!-- form column -->
-      <section class="form-card" aria-labelledby="login-heading">
-        <h2 id="login-heading" style="margin:0 0 10px 0">Welcome back</h2>
-
-        {% if form.non_field_errors %}
-          <div class="errors">{{ form.non_field_errors }}</div>
-        {% endif %}
-
-        <form method="post" novalidate>
-          {% csrf_token %}
-
-          <div class="row">
-            <label for="{{ form.email.id_for_label }}">Email</label>
-            {# Render email field and add useful attributes by using a fallback if the form widget doesn't include them #}
-            {% if form.email %}
-              {% with widget=form.email %}
-                {{ widget|safe }}
-              {% endwith %}
-            {% else %}
-              <input type="email" name="email" id="email" required autocomplete="email" autofocus>
-            {% endif %}
-            {% if form.email.errors %}
-              <div class="errors">{{ form.email.errors.0 }}</div>
-            {% endif %}
-          </div>
-
-          <div class="row">
-            <label for="{{ form.password.id_for_label }}">Password</label>
-            <div class="field-inline">
-              {% if form.password %}
-                {{ form.password }}
-              {% else %}
-                <input type="password" name="password" id="password" required autocomplete="current-password">
-              {% endif %}
-              <button type="button" class="toggle-btn" id="togglePassword" aria-label="Show or hide password">Show</button>
-            </div>
-            {% if form.password.errors %}
-              <div class="errors">{{ form.password.errors.0 }}</div>
-            {% endif %}
-          </div>
-
-          <div class="actions">
-            <a class="btn ghost" href="{% url 'home' %}">Back</a>
-            <button class="btn" type="submit">Login</button>
-          </div>
-        </form>
-      </section>
-
-      <!-- help / promo column -->
-      <aside class="side" aria-labelledby="help-heading">
-        <h3 id="help-heading">Need help signing in?</h3>
-        <p>If you forgot your password, recreate your account or contact support at <strong>mohammaddilshan217@gmail.com</strong></p>
-
-        <h3>Why become a vendor?</h3>
-        <p class="muted">List your packages, manage bookings, and reach travellers across India.</p>
-      </aside>
-    </div>
-  </div>
-
-  <script>
-    // Robust password toggle: tries by input[type="password"], falls back to name-based selector
-    (function(){
-      const toggle = document.getElementById('togglePassword');
-      if (!toggle) return;
-
-      // Try to find the password input by type, then by Django form field name
-      let pwd = document.querySelector('input[type="password"]');
-      if (!pwd) {
-        // fallback using Django field HTML name
-        pwd = document.querySelector('input[name="{{ form.password.html_name }}"]') ||
-              document.getElementById('{{ form.password.id_for_label }}') ||
-              document.querySelector('input[name="password"]');
-      }
-
-      toggle.addEventListener('click', function(){
-        if (!pwd) return;
-        if (pwd.type === 'password') {
-          pwd.type = 'text';
-          toggle.textContent = 'Hide';
-          toggle.setAttribute('aria-pressed', 'true');
-        } else {
-          pwd.type = 'password';
-          toggle.textContent = 'Show';
-          toggle.setAttribute('aria-pressed', 'false');
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --primary: #2563eb;
+            --text: #07102a;
+            --border: #e6edf5;
+            --danger: #b91c1c;
+            --max-width: 480px;
         }
-      });
 
-      // small UX: change button text if user focuses password field with capslock? (optional)
-      // we keep it simple for now.
-    })();
-  </script>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .wrap { max-width: var(--max-width); margin: 28px auto; background: var(--card); border: 1px solid var(--border); }
+
+        .header { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: var(--primary); color: #ffffff; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+        h1 { margin: 0; font-size: 18px; }
+        p.lead { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+        .form-card { padding: 24px; }
+        .form-card h2 { margin: 0 0 16px; font-size: 18px; }
+        .errors { margin-bottom: 8px; padding: 10px 12px; border: 1px solid var(--danger); color: var(--danger); font-size: 13px; }
+
+        .row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        label { font-weight: 700; font-size: 13px; }
+        input[type="email"], input[type="password"], input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid var(--border); background: #ffffff; color: var(--text); font-size: 14px; outline: none; }
+        input:focus { border-color: var(--primary); }
+
+        .field-inline { position: relative; }
+        .toggle-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: 0; cursor: pointer; font-size: 13px; color: var(--muted); padding: 4px; font-weight: 700; }
+        .toggle-btn:hover { color: var(--primary); }
+
+        .actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; }
+        .btn { display: inline-block; padding: 10px 16px; border: 1px solid var(--primary); background: var(--primary); color: #ffffff; font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; }
+        .btn:hover { opacity: 0.9; }
+        .btn.ghost { background: transparent; color: var(--primary); }
+
+        .footer-note { padding: 16px 24px 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+        .footer-note a { color: var(--primary); text-decoration: none; font-weight: 700; }
+        .footer-note a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .wrap { margin: 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap" role="main">
+
+        <header class="header">
+            <div class="brand">
+                <div class="logo">TWD</div>
+                <div>
+                    <h1>Vendor login</h1>
+                    <p class="lead">Sign in to manage your packages and bookings.</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="form-card" aria-labelledby="login-heading">
+            <h2 id="login-heading">Welcome back</h2>
+
+            {% if form.non_field_errors %}
+                <div class="errors">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="row">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {% if form.email %}
+                        {% with widget=form.email %}
+                            {{ widget|safe }}
+                        {% endwith %}
+                    {% else %}
+                        <input type="email" name="email" id="email" required autocomplete="email" autofocus>
+                    {% endif %}
+                    {% if form.email.errors %}<div class="errors">{{ form.email.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="row">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    <div class="field-inline">
+                        {% if form.password %}
+                            {{ form.password }}
+                        {% else %}
+                            <input type="password" name="password" id="password" required autocomplete="current-password">
+                        {% endif %}
+                        <button type="button" class="toggle-btn" id="togglePassword" aria-label="Show or hide password">Show</button>
+                    </div>
+                    {% if form.password.errors %}<div class="errors">{{ form.password.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="actions">
+                    <a class="btn ghost" href="{% url 'home' %}">Back</a>
+                    <button class="btn" type="submit">Login</button>
+                </div>
+            </form>
+        </section>
+
+        <div class="footer-note">
+            New here? <a href="{% url 'vendorsignup' %}">Create an account</a> — or contact support at mohammaddilshan217@gmail.com
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const toggle = document.getElementById('togglePassword');
+            if (!toggle) return;
+            let pwd = document.querySelector('input[type="password"]');
+            if (!pwd) {
+                pwd = document.querySelector('input[name="{{ form.password.html_name }}"]') ||
+                    document.getElementById('{{ form.password.id_for_label }}') ||
+                    document.querySelector('input[name="password"]');
+            }
+            toggle.addEventListener('click', function () {
+                if (!pwd) return;
+                if (pwd.type === 'password') {
+                    pwd.type = 'text';
+                    toggle.textContent = 'Hide';
+                    toggle.setAttribute('aria-pressed', 'true');
+                } else {
+                    pwd.type = 'password';
+                    toggle.textContent = 'Show';
+                    toggle.setAttribute('aria-pressed', 'false');
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
