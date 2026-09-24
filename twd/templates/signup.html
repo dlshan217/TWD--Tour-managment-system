@@ -1,164 +1,147 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up - TWD</title>
-  <link rel="stylesheet" href="{% static 'css/usignup.css' %}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — TWD</title>
+    <link rel="stylesheet" href="{% static 'css/usignup.css' %}">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f5f5f7;
-      color: #1d1d1f;
-    }
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --primary: #2563eb;
+            --accent: #06b6d4;
+            --text: #07102a;
+            --border: #e6edf5;
+            --danger: #b91c1c;
+            --max-width: 720px;
+        }
 
-    .container {
-      max-width: 600px;
-      margin: 60px auto;
-      background-color: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
+        *, *::before, *::after { box-sizing: border-box; }
 
-    .heading {
-      font-size: 32px;
-      font-weight: bold;
-      color: #3c6e71;
-      margin-bottom: 30px;
-    }
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
 
-    .frm p {
-      text-align: left;
-      margin-bottom: 15px;
-      position: relative;
-    }
+        .wrap { max-width: var(--max-width); margin: 28px auto; background: var(--card); border: 1px solid var(--border); }
 
-    .frm label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
+        .header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: var(--primary); color: #ffffff; font-weight: 800; flex-shrink: 0; }
+        .brand h1 { margin: 0; font-size: 18px; }
+        .hint { color: var(--muted); font-size: 13px; }
+        .account-link { text-align: right; }
+        .small-link { color: var(--primary); text-decoration: none; font-weight: 700; }
+        .small-link:hover { text-decoration: underline; }
 
-    .frm input {
-      width: 100%;
-      padding: 10px 40px 10px 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-      font-size: 15px;
-    }
+        .form-card { padding: 24px; }
+        .form-card h2 { margin: 0 0 16px; font-size: 18px; }
+        .errors { margin-bottom: 14px; padding: 10px 12px; border: 1px solid var(--danger); color: var(--danger); font-size: 13px; }
 
-    /* Eye button */
-    .pw-toggle {
-      position: absolute;
-      right: 12px;
-      top: 39px;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
+        .frm p { display: flex; flex-direction: column; gap: 6px; margin: 0 0 16px; }
+        .frm label { font-weight: 700; font-size: 13px; }
+        .frm input, .frm select, .frm textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); background: #ffffff; color: var(--text); font-size: 14px; font-family: inherit; outline: none; }
+        .frm input:focus, .frm select:focus, .frm textarea:focus { border-color: var(--primary); }
+        .frm textarea { min-height: 90px; resize: vertical; }
+        .frm .helptext { color: var(--muted); font-size: 12px; }
+        .frm .errorlist { margin: 0; padding: 0; list-style: none; color: var(--danger); font-size: 12px; }
 
-    .pw-toggle svg {
-      width: 22px;
-      height: 22px;
-      color: #444;
-    }
+        .password-wrapper { position: relative; width: 100%; }
+        .password-wrapper input { padding-right: 64px; }
+        .pw-toggle { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); padding: 4px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 700; }
+        .pw-toggle:hover { color: var(--primary); }
 
-    .submit_btn {
-      background-color: #3c6e71;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      width: 100%;
-      margin-top: 10px;
-    }
+        .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 8px; }
+        .btn { display: inline-block; padding: 10px 16px; border: 1px solid var(--primary); background: var(--primary); color: #ffffff; font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; }
+        .btn:hover { opacity: 0.9; }
+        .btn.ghost { background: transparent; color: var(--primary); }
 
-    .submit_btn:hover {
-      background-color: #2a4f50;
-      transform: scale(1.05);
-    }
+        .tips { padding: 16px 24px 24px; border-top: 1px solid var(--border); }
+        .tips h4 { margin: 0 0 8px; font-size: 13px; }
+        .tips ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 12px; }
+        .tips li { margin-bottom: 4px; }
 
-    .mini_div {
-      margin-top: 20px;
-      font-size: 14px;
-    }
-
-    .mini_div a {
-      color: #3c6e71;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .mini_div a:hover {
-      text-decoration: underline;
-    }
-  </style>
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .wrap { margin: 0; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .account-link { text-align: left; }
+            .actions { flex-direction: column-reverse; align-items: stretch; }
+            .actions .btn { width: 100%; text-align: center; }
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1 class="heading">Sign Up</h1>
+    <div class="wrap" role="main">
 
-    <form class="frm" method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
+        <header class="header">
+            <div class="brand">
+                <div class="logo">TWD</div>
+                <div>
+                    <h1>User Signup</h1>
+                    <div class="hint">Create an account to get started.</div>
+                </div>
+            </div>
 
-      <!-- Show/Hide password buttons are added by JS -->
+            <div class="account-link">
+                <small class="hint">Already have an account?</small>
+                <div><a class="small-link" href="{% url 'userlogin' %}">Login</a></div>
+            </div>
+        </header>
 
-      <button class="submit_btn" type="submit">Sign Up</button>
-    </form>
+        <section class="form-card" aria-labelledby="signup-heading">
+            <h2 id="signup-heading">Create your account</h2>
 
-    <div class="mini_div">
-      <p>Already have an account? 
-        <a href="{% url 'userlogin' %}">Login</a>
-      </p>
+            {% if form.non_field_errors %}
+                <div class="errors">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <form class="frm" method="post" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="actions">
+                    <a class="btn ghost" href="{% url 'home' %}">Cancel</a>
+                    <button class="btn" type="submit">Create Account</button>
+                </div>
+            </form>
+        </section>
+
+        <div class="tips">
+            <h4>Quick tips</h4>
+            <ul>
+                <li>Use a valid email address.</li>
+                <li>Choose a strong password.</li>
+                <li>Keep your account details up to date.</li>
+            </ul>
+        </div>
     </div>
-  </div>
 
-  <!-- Password Show/Hide Script -->
-  <script>
-    document.querySelectorAll("input.password-input").forEach(function(input){
-      // Create toggle button
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.classList.add("pw-toggle");
-      btn.innerHTML = `
-        <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-          <circle cx="12" cy="12" r="3"/>
-        </svg>
-        <svg class="eye-closed" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.64 21.64 0 0 1 5.8-4.37"/>
-          <path d="M1 1l22 22"/>
-        </svg>
-      `;
-
-      // Insert after input
-      input.parentNode.appendChild(btn);
-
-      // Toggle logic
-      btn.addEventListener("click", function(){
-        const isHidden = input.type === "password";
-        input.type = isHidden ? "text" : "password";
-
-        btn.querySelector(".eye-open").style.display = isHidden ? "none" : "inline";
-        btn.querySelector(".eye-closed").style.display = isHidden ? "inline" : "none";
-      });
-    });
-  </script>
-
+    <script>
+        document.querySelectorAll("input[type='password']").forEach(function (input) {
+            const parent = input.parentNode;
+            parent.classList.add("password-wrapper");
+            const button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("pw-toggle");
+            button.textContent = "Show";
+            button.setAttribute("aria-label", "Show or hide password");
+            parent.appendChild(button);
+            button.addEventListener("click", function () {
+                const hidden = input.type === "password";
+                input.type = hidden ? "text" : "password";
+                button.textContent = hidden ? "Hide" : "Show";
+            });
+        });
+    </script>
 </body>
 </html>

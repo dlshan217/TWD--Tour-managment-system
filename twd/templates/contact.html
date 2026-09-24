@@ -2,45 +2,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f5f5f7;
-  color: #1d1d1f;
-}
-
-.container {
-  max-width: 800px;
-  margin: 50px auto;
-  background-color: white;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.card {
-  background-color: #f2f2f2;
-  border-radius: 15px;
-  padding: 20px;
-  margin: 20px 0;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-</style>
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - TWD</title>
-    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --primary: #2563eb;
+            --text: #07102a;
+            --border: #e6edf5;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 32px;
+        }
+
+        .nav_div { text-align: center; margin-bottom: 24px; }
+        .nav_head { font-size: 1.6rem; margin: 0; }
+        .tagline { font-size: 13px; color: var(--muted); display: block; margin-top: 4px; }
+
+        .head { text-align: center; font-size: 1.4rem; margin: 0 0 24px; }
+
+        .main { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .card { border: 1px solid var(--border); padding: 20px; text-align: center; }
+        .label { margin: 0 0 8px; font-size: 13px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+        .value { margin: 0; font-weight: 700; }
+
+        @media (max-width: 600px) {
+            .container { margin: 0; padding: 20px; }
+            .main { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -58,7 +64,7 @@ body {
         </div>
         <div class="card">
             <h2 class="label">Email</h2>
-            <p class="value">mohammaddilshan217@gmail.com/p>
+            <p class="value">mohammaddilshan217@gmail.com</p>
         </div>
     </div>
 </div>

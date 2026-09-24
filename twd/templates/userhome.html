@@ -5,34 +5,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Home — TWD</title>
-    <link rel="stylesheet" href="{% static 'css/userhome.css' %}">
+
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --primary: #2563eb;
+            --text: #07102a;
+            --border: #e6edf5;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--primary); color: #ffffff; font-weight: 800; flex-shrink: 0; }
+        .brand h4 { margin: 0; font-size: 16px; }
+
+        .desktop-nav { display: flex; gap: 16px; }
+        .desktop-nav a { text-decoration: none; color: var(--text); font-weight: 700; font-size: 14px; }
+        .desktop-nav a:hover { color: var(--primary); }
+
+        .search-section { margin-bottom: 24px; }
+        .search-section input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); font-size: 14px; background: var(--card); font-family: inherit; }
+        .search-section input:focus { outline: none; border-color: var(--primary); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+
+        .card { background: var(--card); border: 1px solid var(--border); display: flex; flex-direction: column; }
+        .image { position: relative; }
+        .image img { width: 100%; height: 160px; object-fit: cover; display: block; }
+        .price { position: absolute; top: 10px; right: 10px; background: var(--primary); color: #ffffff; padding: 4px 10px; font-size: 13px; font-weight: 700; }
+
+        .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+        .card-body h3 { margin: 0 0 6px; font-size: 15px; }
+        .card-body p { margin: 0 0 12px; font-size: 13px; color: var(--muted); flex: 1; }
+
+        .meta { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+
+        .btn { display: block; text-align: center; padding: 10px; border: 1px solid var(--primary); background: var(--primary); color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; }
+        .btn:hover { opacity: 0.9; }
+
+        .empty { grid-column: 1/-1; text-align: center; padding: 48px 20px; background: var(--card); border: 1px solid var(--border); }
+
+        .mobile-nav { display: none; }
+
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            .mobile-nav {
+                position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;
+                background: #ffffff; display: flex; justify-content: space-around; align-items: center;
+                border-top: 1px solid var(--border);
+            }
+            .mobile-nav a { text-decoration: none; color: var(--text); font-weight: 700; font-size: 13px; }
+            body { padding-bottom: 70px; }
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
 
-    <!-- ===== Topbar ===== -->
     <header class="topbar">
         <div class="brand">
             <div class="logo">TWD</div>
-            <div>
-                <h4>Home</h4>
-            </div>
+            <div><h4>Home</h4></div>
         </div>
 
         <nav class="desktop-nav">
             <a href="{% url 'profile' %}">Profile</a>
             <a href="{% url 'bookingdisplay' %}">Bookings</a>
-            
         </nav>
     </header>
 
-    <!-- ===== Search ===== -->
     <section class="search-section">
         <input type="search" placeholder="Search packages..." />
     </section>
 
-    <!-- ===== Packages ===== -->
     <main class="grid">
         {% for i in package %}
         <div class="card">
@@ -50,13 +110,7 @@
                 <p>{{ i.description }}</p>
 
                 <div class="meta">
-                    <span>
-                        {% if i.date %}
-                        {{ i.date|date:"Y-m-d" }}
-                        {% else %}
-                        Date TBA
-                        {% endif %}
-                    </span>
+                    {% if i.date %}{{ i.date|date:"Y-m-d" }}{% else %}Date TBA{% endif %}
                 </div>
 
                 <a href="{% url 'booking' i.id %}" class="btn">Book Now</a>
@@ -71,7 +125,6 @@
 
 </div>
 
-<!-- ===== Mobile Bottom Nav ===== -->
 <nav class="mobile-nav">
     <a href="{% url 'userhome' %}">Home</a>
     <a href="{% url 'bookingdisplay' %}">Bookings</a>

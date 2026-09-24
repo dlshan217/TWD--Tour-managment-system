@@ -1,123 +1,123 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - TWD</title>
-  <link rel="stylesheet" href="{% static 'css/userlogin.css' %}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — TWD</title>
+    <link rel="stylesheet" href="{% static 'css/userlogin.css' %}">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f5f5f7;
-      color: #1d1d1f;
-    }
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --primary: #2563eb;
+            --accent: #06b6d4;
+            --text: #07102a;
+            --border: #e6edf5;
+            --danger: #b91c1c;
+            --max-width: 480px;
+        }
 
-    .container {
-      max-width: 600px;
-      margin: 60px auto;
-      background-color: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
+        *, *::before, *::after { box-sizing: border-box; }
 
-    .heading {
-      font-size: 32px;
-      font-weight: bold;
-      color: #3c6e71;
-      margin-bottom: 30px;
-    }
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
 
-    .main_div {
-      display: flex;
-      justify-content: center;
-    }
+        .wrap { max-width: var(--max-width); margin: 28px auto; background: var(--card); border: 1px solid var(--border); }
 
-    .frm {
-      width: 100%;
-    }
+        .header { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: var(--primary); color: #ffffff; font-weight: 800; flex-shrink: 0; }
+        .brand h1 { margin: 0; font-size: 18px; }
+        .hint { color: var(--muted); font-size: 13px; }
 
-    .frm p {
-      text-align: left;
-      margin-bottom: 15px;
-    }
+        .form-card { padding: 24px; }
+        .form-card h2 { margin: 0 0 16px; font-size: 18px; }
+        .errors { margin-bottom: 14px; padding: 10px 12px; border: 1px solid var(--danger); color: var(--danger); font-size: 13px; }
 
-    .frm label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
+        .frm p { display: flex; flex-direction: column; gap: 6px; margin: 0 0 16px; }
+        .frm label { font-weight: 700; font-size: 13px; }
+        .frm input, .frm select, .frm textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); background: #ffffff; color: var(--text); font-size: 14px; font-family: inherit; outline: none; }
+        .frm input:focus, .frm select:focus, .frm textarea:focus { border-color: var(--primary); }
+        .frm .helptext { color: var(--muted); font-size: 12px; }
+        .frm .errorlist { margin: 0; padding: 0; list-style: none; color: var(--danger); font-size: 12px; }
 
-    .frm input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-    }
+        .password-wrapper { position: relative; width: 100%; }
+        .password-wrapper input { padding-right: 64px; }
+        .pw-toggle { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); padding: 4px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 700; }
+        .pw-toggle:hover { color: var(--primary); }
 
-    .lg {
-      background-color: #3c6e71;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      width: 100%;
-      margin-top: 10px;
-    }
+        .lg { display: block; width: 100%; padding: 10px 16px; border: 1px solid var(--primary); background: var(--primary); color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 6px; }
+        .lg:hover { opacity: 0.9; }
 
-    .lg:hover {
-      background-color: #2a4f50;
-      transform: scale(1.05);
-    }
+        .signup-link { margin: 16px 0 0; font-size: 13px; color: var(--muted); text-align: center; }
+        .signup-link a { color: var(--primary); text-decoration: none; font-weight: 700; }
+        .signup-link a:hover { text-decoration: underline; }
 
-    /* Signup link styling */
-    .signup-link {
-      margin-top: 18px;
-      font-size: 15px;
-      color: #374151;
-    }
-
-    .signup-link a {
-      font-weight: 600;
-      color: #3c6e71;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .signup-link a:hover {
-      color: #274043;
-      text-decoration: underline;
-    }
-  </style>
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .wrap { margin: 0; }
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1 class="heading">Login Here</h1>
-    <div class="main_div">
-      <form class="frm" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="lg" type="submit">Login</button>
+    <div class="wrap" role="main">
 
-        <!-- ⭐ NEW Signup Link -->
-        <p class="signup-link">
-          Don't have an account?
-          <a href="{% url 'signup' %}">Create one</a>
-        </p>
-      </form>
+        <header class="header">
+            <div class="brand">
+                <div class="logo">TWD</div>
+                <div>
+                    <h1>User Login</h1>
+                    <div class="hint">Sign in to access your TWD account.</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="form-card" aria-labelledby="login-heading">
+            <h2 id="login-heading">Welcome back</h2>
+
+            {% if form.non_field_errors %}
+                <div class="errors">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <form class="frm" method="post" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button class="lg" type="submit">Login</button>
+
+                <p class="signup-link">
+                    Don't have an account? <a href="{% url 'signup' %}">Create one</a>
+                </p>
+            </form>
+        </section>
     </div>
-  </div>
-  
+
+    <script>
+        document.querySelectorAll("input[type='password']").forEach(function (input) {
+            const parent = input.parentNode;
+            parent.classList.add("password-wrapper");
+            const button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("pw-toggle");
+            button.textContent = "Show";
+            button.setAttribute("aria-label", "Show or hide password");
+            parent.appendChild(button);
+            button.addEventListener("click", function () {
+                const hidden = input.type === "password";
+                input.type = hidden ? "text" : "password";
+                button.textContent = hidden ? "Hide" : "Show";
+            });
+        });
+    </script>
 </body>
 </html>

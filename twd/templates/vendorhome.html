@@ -5,13 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Dashboard — TWD</title>
-    <link rel="stylesheet" href="{% static 'css/vendorhome.css' %}">
+
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --primary: #2563eb;
+            --danger: #b91c1c;
+            --text: #07102a;
+            --muted: #6b7280;
+            --border: #e6edf5;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .wrapper { max-width: 1200px; margin: 0 auto; padding: 28px; }
+
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--primary); padding: 20px; color: #ffffff; margin-bottom: 20px;
+        }
+
+        .brand { display: flex; gap: 14px; align-items: center; }
+        .logo { width: 44px; height: 44px; background: #ffffff; color: var(--primary); font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .topbar h1 { margin: 0; font-size: 18px; }
+        .topbar span { font-size: 13px; opacity: 0.85; }
+
+        .nav-actions { display: flex; gap: 10px; }
+
+        .btn { padding: 10px 14px; text-decoration: none; font-weight: 700; font-size: 13px; border: 1px solid transparent; }
+        .primary { background: #ffffff; color: var(--primary); }
+        .primary:hover { opacity: 0.9; }
+        .light { background: transparent; color: #ffffff; border-color: rgba(255,255,255,0.5); }
+        .danger { background: var(--danger); color: #ffffff; }
+
+        .vendor-card { display: flex; gap: 20px; background: var(--card); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; align-items: center; }
+        .avatar { width: 56px; height: 56px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
+        .vendor-info h3 { margin: 0 0 4px; font-size: 16px; }
+        .vendor-info p { margin: 0; font-size: 13px; color: var(--muted); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+        .card { background: var(--card); border: 1px solid var(--border); display: flex; flex-direction: column; }
+        .card-img { position: relative; height: 160px; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .price { position: absolute; top: 10px; right: 10px; background: var(--primary); color: #ffffff; padding: 4px 10px; font-weight: 700; font-size: 13px; }
+
+        .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+        .card-body h3 { margin: 0 0 6px; font-size: 15px; }
+        .card-body p { margin: 0 0 12px; font-size: 13px; color: var(--muted); flex: 1; }
+
+        .card-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+        .card-actions { display: flex; gap: 8px; }
+        .card-actions .btn { flex: 1; text-align: center; padding: 8px; }
+        .card-actions .primary { background: var(--primary); color: #ffffff; }
+
+        .empty { grid-column: 1/-1; background: var(--card); border: 1px solid var(--border); padding: 40px; text-align: center; }
+
+        .mobile-nav { display: none; }
+
+        @media (max-width: 768px) {
+            .wrapper { padding: 16px; }
+            .nav-actions { display: none; }
+            .vendor-card { flex-direction: column; align-items: flex-start; text-align: left; }
+            .mobile-nav {
+                position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;
+                background: #ffffff; display: flex; justify-content: space-around; align-items: center;
+                border-top: 1px solid var(--border);
+            }
+            .mobile-nav a { text-decoration: none; font-weight: 700; color: var(--primary); font-size: 13px; }
+            body { padding-bottom: 70px; }
+        }
+    </style>
 </head>
 <body>
 
 <div class="wrapper">
 
-    <!-- ===== Desktop Topbar ===== -->
     <header class="topbar">
         <div class="brand">
             <div class="logo">TWD</div>
@@ -22,17 +99,14 @@
         </div>
 
         <nav class="nav-actions">
-            <a href="{% url 'vcreate' %}" class="btn primary">+ Create</a>
+            <a href="{% url 'vcreate' %}" class="btn primary">Create</a>
             <a href="{% url 'vendorbookings' %}" class="btn light">Bookings</a>
             <a href="{% url 'vendorlogout' %}" class="btn danger">Logout</a>
         </nav>
     </header>
 
-    <!-- ===== Vendor Profile ===== -->
     <section class="vendor-card">
-        <div class="avatar">
-            {{ vendor.businessname|slice:":1"|upper|default:"V" }}
-        </div>
+        <div class="avatar">{{ vendor.businessname|slice:":1"|upper|default:"V" }}</div>
         <div class="vendor-info">
             <h3>{{ vendor.businessname|default:"Vendor" }}</h3>
             <p>{{ vendor.email|default:"—" }}</p>
@@ -40,7 +114,6 @@
         </div>
     </section>
 
-    <!-- ===== Packages Grid ===== -->
     <main class="grid">
         {% for i in package %}
         <div class="card">
@@ -71,14 +144,12 @@
         {% empty %}
         <div class="empty">
             <h3>No packages yet</h3>
-            <a href="{% url 'vcreate' %}" class="btn primary">Create Package</a>
         </div>
         {% endfor %}
     </main>
 
 </div>
 
-<!-- ===== Mobile Bottom Navigation ===== -->
 <nav class="mobile-nav">
     <a href="{% url 'vcreate' %}">Create</a>
     <a href="{% url 'vendorbookings' %}">Bookings</a>
